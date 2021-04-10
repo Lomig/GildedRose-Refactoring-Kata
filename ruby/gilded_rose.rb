@@ -12,9 +12,13 @@ class GildedRose
     item.quality +=1 if item.sell_in < 0
   end
 
+  def backstage_update(item)
+  end
+
   def update_quality()
     @items.each do |item|
       next aged_brie_update(item) if item.name == "Aged Brie"
+      next backstage_update(item) if item.name == "Backstage passes to a TAFKAL80ETC concert"
 
       if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert"
         if item.quality > 0
