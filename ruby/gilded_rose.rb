@@ -14,69 +14,68 @@ class GildedRose
       when "Sulfuras, Hand of Ragnaros"
         Sulfuras.new(item).update
       else
-        Common.new(item).update
+        CommonItem.new(item).update
       end
     end
   end
 
-  class Common
+  class CommonItem
     attr_reader :item
 
     def initialize(item)
       @item = item
     end
+
 
     def update
       item.sell_in -= 1
 
       item.quality -= 1
       item.quality -= 1 if item.sell_in < 0
-      item.quality = 0 if item.quality < 0
+      
+      limit_quality
+      self
+    end
+
+    private
+
+    def limit_quality
+      return item.quality = 0 if item.quality < 0
+
+      item.quality = 50 if item.quality > 50
     end
   end
 
-  class AgedBrie
-    attr_reader :item
-
-    def initialize(item)
-      @item = item
-    end
-
+  class AgedBrie < CommonItem
     def update
       item.sell_in -= 1
 
       item.quality +=1
       item.quality +=1 if item.sell_in < 0
-      item.quality = 50 if item.quality > 50
+
+      limit_quality
+      self
     end
   end
 
-  class Backstage
-    attr_reader :item
-
-    def initialize(item)
-      @item = item
-    end
-
+  class Backstage < CommonItem
     def update
       item.sell_in -= 1
+      item.quality = 0 and return self if item.sell_in < 0
 
       item.quality += 1
       item.quality += 1 if item.sell_in < 10
       item.quality += 1 if item.sell_in < 5
-      item.quality = 0 if item.sell_in < 0
-      item.quality = 50 if item.quality > 50
+
+      limit_quality
+      self
     end
   end
 
-  class Sulfuras
-    attr_reader :item
-
-    def initialize(item)
-      @item = item
+  class Sulfuras < CommonItem
+    def update
+      self
     end
-
-    def update; end
   end
 end
 
