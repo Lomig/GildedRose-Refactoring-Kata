@@ -26,6 +26,11 @@ class GildedRose
   end
 
   def common_update(item)
+    item.sell_in -= 1
+
+    item.quality -= 1
+    item.quality -= 1 if item.sell_in < 0
+    item.quality = 0 if item.quality < 0
   end
 
   def update_quality()
