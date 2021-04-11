@@ -35,11 +35,16 @@ class GildedRose
 
   def update_quality()
     @items.each do |item|
-      next aged_brie_update(item) if item.name == "Aged Brie"
-      next backstage_update(item) if item.name == "Backstage passes to a TAFKAL80ETC concert"
-      next sulfuras_update(item)  if item.name == "Sulfuras, Hand of Ragnaros"
-      
-      common_update(item)
+      case item.name
+      when "Aged Brie"
+        aged_brie_update(item)
+      when "Backstage passes to a TAFKAL80ETC concert"
+        backstage_update(item)
+      when "Sulfuras, Hand of Ragnaros"
+        sulfuras_update(item)
+      else
+        common_update(item)
+      end
     end
   end
 end
