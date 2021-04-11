@@ -301,7 +301,7 @@ describe GildedRose do
       end
     end
 
-    xcontext "with a Conjured item" do
+    context "with a Conjured item" do
       let(:sell_in_date) { 25 }
       let(:item) { Item.new("Conjured mana bottle", sell_in_date, quality) }
 

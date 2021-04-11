@@ -3,6 +3,7 @@ require_relative("common_item")
 require_relative("aged_brie")
 require_relative("backstage")
 require_relative("sulfuras")
+require_relative("conjured_item")
 
 class GildedRose
   ITEM_CLASSES = {
@@ -23,6 +24,7 @@ class GildedRose
   private
   
   def class_from(name:)
-    ITEM_CLASSES[name] || CommonItem
+    klass = ConjuredItem if name.downcase.start_with?("conjured ")
+    ITEM_CLASSES[name] || klass || CommonItem
   end
 end
