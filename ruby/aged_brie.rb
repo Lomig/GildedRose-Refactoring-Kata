@@ -2,12 +2,10 @@ require_relative("common_item")
 
 class AgedBrie < CommonItem
   def update
-    item.sell_in -= 1
+    ages_one_day
+    increase_quality_up_to_fifty
+    increase_quality_up_to_fifty_again if expired?
 
-    item.quality +=1
-    item.quality +=1 if item.sell_in < 0
-
-    limit_quality
     self
   end
 end

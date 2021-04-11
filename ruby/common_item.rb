@@ -7,20 +7,30 @@ class CommonItem
 
 
   def update
-    item.sell_in -= 1
-
-    item.quality -= 1
-    item.quality -= 1 if item.sell_in < 0
+    ages_one_day
+    decrease_quality_down_to_zero
+    decrease_quality_down_to_zero_again if expired?
     
-    limit_quality
     self
   end
 
   private
 
-  def limit_quality
-    return item.quality = 0 if item.quality < 0
-
-    item.quality = 50 if item.quality > 50
+  def ages_one_day
+    item.sell_in -= 1
   end
+
+  def expired?
+    item.sell_in < 0
+  end
+
+  def decrease_quality_down_to_zero(time: 1)
+    time.times { item.quality -= 1 if item.quality > 0 }
+  end
+  alias decrease_quality_down_to_zero_again decrease_quality_down_to_zero
+
+  def increase_quality_up_to_fifty
+    item.quality += 1 if item.quality < 50
+  end
+  alias increase_quality_up_to_fifty_again increase_quality_up_to_fifty
 end
