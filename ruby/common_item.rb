@@ -1,16 +1,17 @@
+# frozen_string_literal: true
+
 class CommonItem
-  attr_reader :item
+  private attr_reader :item
 
   def initialize(item)
     @item = item
   end
 
-
   def update
     ages_one_day
     decrease_quality_down_to_zero
     decrease_quality_down_to_zero_again if expired?
-    
+
     self
   end
 
@@ -20,12 +21,10 @@ class CommonItem
     item.sell_in -= 1
   end
 
-  def expired?
-    item.sell_in < 0
-  end
+  def expired? = item.sell_in.negative?
 
   def decrease_quality_down_to_zero(time: 1)
-    time.times { item.quality -= 1 if item.quality > 0 }
+    time.times { item.quality -= 1 if item.quality.positive? }
   end
   alias decrease_quality_down_to_zero_again decrease_quality_down_to_zero
 
